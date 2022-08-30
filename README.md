@@ -1,2 +1,2 @@
-# ElectricMagneticField-Visualize
-just a very cool visualize
+# MageticFieldVisual
+Created with CodeSandbox
