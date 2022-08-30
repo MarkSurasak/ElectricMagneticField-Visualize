@@ -33,7 +33,15 @@ document.body.appendChild(stats.dom);
 //setup gui
 export const gui = new GUI();
 
-const setting = { current_curve: "Solenoid", current_curve_index: 0 };
+const setting = {
+  current_curve: "Solenoid",
+  current_curve_index: 0,
+  particle: {
+    generate_particle: generateParticle,
+    clear_all_particle: clearParticle,
+    particle_count: 10
+  }
+};
 
 const grid = new THREE.GridHelper(50, 50);
 const axis = new THREE.AxesHelper(5);
@@ -44,7 +52,7 @@ const copper_material = new THREE.MeshPhongMaterial({ color: "orange" });
 //curves
 const curves = [new Solenoid(), new Line()];
 
-let curve_menues = [];
+let particle_menues, curve_menues;
 
 const curve_names = curves.map((curve) => {
   return curve.name;
@@ -84,15 +92,23 @@ function onCurveChange() {
     } else {
       curve.visible = true;
       menu.show();
-      menu.open();
     }
   }
 }
+
+function generateParticle() {}
+
+function clearParticle() {}
 
 function initialGUI() {
   //add gui
   gui.add(grid, "visible").name("show grid");
   gui.add(axis, "visible").name("show axis");
+
+  particle_menues = gui.addFolder("Particle");
+
+  particle_menues.add(setting.particle, "particle_count");
+  particle_menues.add(setting.particle, "generate_particle");
 
   gui
     .add(setting, "current_curve", curve_names)
@@ -143,6 +159,7 @@ initialScene();
 initialGUI();
 animate();
 onCurvePropertyChange();
+onCurveChange();
 
 console.log(this);
 
